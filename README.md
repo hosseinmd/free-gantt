@@ -1,10 +1,14 @@
 # Free Gantt Chart
 
-A beautiful, free Gantt chart visualization tool built with React, TypeScript, and [@svar-ui/react-gantt](https://docs.svar.dev/react/gantt/). Upload your CSV files to instantly visualize project timelines and task dependencies.
+A beautiful, free Gantt chart visualization tool built with React, TypeScript. Connect your Google Sheets or upload CSV files to instantly visualize project timelines and task dependencies.
 
 ## 🚀 Features
 
 - 📊 Interactive Gantt chart visualization with dark theme
+- 🔗 **Google Sheets Integration** - Connect directly to your Google Sheets
+  - Real-time data sync
+  - Edit in the Gantt chart and save back to Google Sheets
+  - No file uploads needed
 - 📁 CSV file upload support with drag & drop
 - ✏️ Full editing capabilities:
   - Add, edit, and delete tasks
@@ -12,6 +16,7 @@ A beautiful, free Gantt chart visualization tool built with React, TypeScript, a
   - Create task dependencies
   - Move tasks to reorder
 - 💾 Export edited data back to CSV format
+- 🔐 Secure Google OAuth authentication
 - 🎨 Modern, responsive UI powered by Ant Design
 - 🛠️ Built-in toolbar with task management features
 - 📥 Sample CSV file included
@@ -56,6 +61,26 @@ id,text,start,end,duration,progress,parent,type
 pnpm install
 ```
 
+### Set Up Google Sheets API (Optional)
+
+To use the Google Sheets integration feature:
+
+1. Follow the detailed guide in [GOOGLE_SHEETS_SETUP.md](./GOOGLE_SHEETS_SETUP.md)
+2. Create a `.env` file with your Google API credentials:
+
+```bash
+cp .env.example .env
+```
+
+3. Add your credentials to the `.env` file:
+
+```env
+VITE_GOOGLE_CLIENT_ID=your_client_id.apps.googleusercontent.com
+VITE_GOOGLE_API_KEY=your_api_key
+```
+
+> **Note:** Google Sheets integration is optional. You can still use the app with CSV files without setting up Google API credentials.
+
 ### Run Development Server
 
 ```bash
@@ -89,6 +114,16 @@ pnpm format
 ```
 
 ## 🎯 How to Use
+
+### Option 1: Google Sheets (Recommended)
+
+1. **Sign in**: Click "Sign in with Google" to authenticate
+2. **Connect your sheet**: Click "Connect Google Sheet" and paste your sheet URL
+3. **Edit your Gantt chart**: Make changes directly in the interactive chart
+4. **Save changes**: Click "Save to Sheet" to update your Google Sheet
+5. **Real-time sync**: Your changes are saved back to Google Sheets instantly
+
+### Option 2: CSV Files
 
 1. **Upload a CSV file**: Click "Choose CSV File" and select your CSV file
 2. **Download sample**: Click "Download Sample" to get a template CSV
@@ -126,6 +161,8 @@ This will build your project and deploy it to the `gh-pages` branch.
 - **Vite** - Build tool and dev server
 - **Ant Design** - Professional UI component library
 - **@svar-ui/react-gantt** - Gantt chart component
+- **Google Sheets API** - Real-time spreadsheet integration
+- **@react-oauth/google** - Modern Google OAuth authentication
 - **PapaParse** - CSV parsing library
 - **ESLint** - Code linting
 - **Prettier** - Code formatting
@@ -134,8 +171,10 @@ This will build your project and deploy it to the `gh-pages` branch.
 
 ## 📚 Resources
 
+- [Google Sheets Setup Guide](./GOOGLE_SHEETS_SETUP.md)
 - [SVAR React Gantt Documentation](https://docs.svar.dev/react/gantt/)
 - [Toolbar Configuration Guide](https://docs.svar.dev/react/gantt/guides/configuration/toolbar)
+- [Google Sheets API Documentation](https://developers.google.com/sheets/api)
 - [PapaParse Documentation](https://www.papaparse.com/)
 
 ## 📝 License
