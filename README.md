@@ -42,19 +42,19 @@ pnpm format
 
 ## Deploy to GitHub Pages
 
-1. Make sure your repository is named `free-gantt` on GitHub
-2. Run the deploy command:
+### Automatic Deployment (Recommended)
+
+The project includes a GitHub Actions workflow that automatically deploys to GitHub Pages when you push to the `main` branch.
+
+### Manual Deployment (Alternative)
+
+You can also deploy manually using the command:
 
 ```bash
 pnpm deploy
 ```
 
 This will build your project and deploy it to the `gh-pages` branch.
-
-3. Enable GitHub Pages in your repository settings:
-   - Go to Settings > Pages
-   - Select `gh-pages` branch as the source
-   - Your site will be available at: `https://yourusername.github.io/free-gantt/`
 
 ## Tech Stack
 
@@ -65,4 +65,3 @@ This will build your project and deploy it to the `gh-pages` branch.
 - **Prettier** - Code formatting
 - **pnpm** - Fast, disk space efficient package manager
 - **gh-pages** - GitHub Pages deployment
-
