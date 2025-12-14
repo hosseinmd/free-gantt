@@ -1,67 +1,18 @@
 import { useState, useEffect } from 'react'
-import { Editor, Gantt, IApi, Toolbar, Tooltip } from '@svar-ui/react-gantt'
-import {
-  Upload,
-  Button,
-  Card,
-  Alert,
-  Space,
-  Typography,
-  Divider,
-  List,
-  Tag,
-  Input,
-  Modal,
-  Spin,
-  message,
-  Tabs,
-  Select,
-} from 'antd'
-import {
-  UploadOutlined,
-  DownloadOutlined,
-  DeleteOutlined,
-  FileTextOutlined,
-  ProjectOutlined,
-  ExportOutlined,
-  DatabaseOutlined,
-  GoogleOutlined,
-  SaveOutlined,
-  LoginOutlined,
-  LogoutOutlined,
-  LinkOutlined,
-} from '@ant-design/icons'
+import { IApi } from '@svar-ui/react-gantt'
+import { Alert, message } from 'antd'
 import type { UploadProps } from 'antd'
 import Papa from 'papaparse'
 import { useGoogleLogin } from '@react-oauth/google'
 import { googleSheetsService } from './services/googleSheetsService'
+import { Header } from './components/Header'
+import { Controls } from './components/Controls'
+import { EmptyState } from './components/EmptyState'
+import { GanttChart } from './components/GanttChart'
+import { GoogleSheetModal } from './components/GoogleSheetModal'
+import { CSVRow, GanttTask } from './types/gantt'
 import './App.css'
 import '@svar-ui/react-gantt/all.css'
-
-const { Title, Paragraph, Text } = Typography
-const { Dragger } = Upload
-
-interface CSVRow {
-  id: string
-  text: string
-  start: string
-  end: string
-  duration: string
-  progress: string
-  parent?: string
-  type?: string
-}
-
-interface GanttTask {
-  id: number | string
-  text: string
-  start: Date
-  end: Date | undefined
-  duration: number
-  progress: number
-  parent?: number | string
-  type?: string
-}
 
 function App() {
   const [api, setApi] = useState<IApi | undefined>(undefined)
@@ -386,41 +337,6 @@ function App() {
     URL.revokeObjectURL(url)
   }
 
-  const csvFormatData = [
-    {
-      field: 'id',
-      required: true,
-      description: 'Unique identifier for each task',
-    },
-    { field: 'text', required: true, description: 'Task name/description' },
-    {
-      field: 'start',
-      required: true,
-      description: 'Start date (YYYY-MM-DD format)',
-    },
-    {
-      field: 'end',
-      required: true,
-      description: 'End date (YYYY-MM-DD format)',
-    },
-    { field: 'duration', required: true, description: 'Task duration in days' },
-    {
-      field: 'progress',
-      required: true,
-      description: 'Completion progress (0-1)',
-    },
-    {
-      field: 'parent',
-      required: false,
-      description: 'Parent task ID (optional)',
-    },
-    {
-      field: 'type',
-      required: false,
-      description: 'Task type (optional: task/project/milestone)',
-    },
-  ]
-
   const handleAddTask = () => {
     setHasUnsavedChanges(true)
   }
@@ -433,264 +349,25 @@ function App() {
     setHasUnsavedChanges(true)
   }
 
-  const emptyStateContent = (
-    <Card
-      style={{
-        maxWidth: 900,
-        textAlign: 'center',
-        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
-      }}
-    >
-      <div style={{ fontSize: '5rem', opacity: 0.5, marginBottom: '1rem' }}>
-        <DatabaseOutlined />
-      </div>
-      <Title level={2}>No data loaded</Title>
-      <Paragraph style={{ fontSize: '1.1rem', marginBottom: '2rem' }}>
-        Connect to Google Sheets or upload a CSV file to get started
-      </Paragraph>
-
-      <Tabs
-        defaultActiveKey="sheets"
-        centered
-        items={[
-          {
-            key: 'sheets',
-            label: (
-              <span>
-                <GoogleOutlined /> Google Sheets
-              </span>
-            ),
-            children: (
-              <div style={{ padding: '20px 0' }}>
-                {!isSignedIn ? (
-                  <Space direction="vertical" size="large">
-                    <Paragraph>
-                      Sign in to Google to connect your Gantt chart data
-                    </Paragraph>
-                    <Button
-                      type="primary"
-                      size="large"
-                      icon={<LoginOutlined />}
-                      onClick={handleGoogleSignIn}
-                      loading={isLoading}
-                    >
-                      Sign in with Google
-                    </Button>
-                  </Space>
-                ) : (
-                  <Space direction="vertical" size="large">
-                    <Paragraph type="success">✓ Signed in to Google</Paragraph>
-                    <Button
-                      type="primary"
-                      size="large"
-                      icon={<LinkOutlined />}
-                      onClick={handleConnectSheet}
-                    >
-                      Connect Google Sheet
-                    </Button>
-                  </Space>
-                )}
-              </div>
-            ),
-          },
-          {
-            key: 'csv',
-            label: (
-              <span>
-                <FileTextOutlined /> CSV File
-              </span>
-            ),
-            children: (
-              <div style={{ padding: '20px 0' }}>
-                <Space
-                  direction="vertical"
-                  size="large"
-                  style={{ width: '100%' }}
-                >
-                  <Dragger {...uploadProps}>
-                    <p className="ant-upload-drag-icon">
-                      <UploadOutlined style={{ fontSize: '48px' }} />
-                    </p>
-                    <p className="ant-upload-text">
-                      Click or drag CSV file to this area to upload
-                    </p>
-                  </Dragger>
-                  <a
-                    href={`${import.meta.env.BASE_URL}sample-gantt.csv`}
-                    download="sample-gantt.csv"
-                  >
-                    <Button icon={<DownloadOutlined />} size="large">
-                      Download Sample CSV
-                    </Button>
-                  </a>
-                </Space>
-              </div>
-            ),
-          },
-        ]}
-      />
-
-      <Divider />
-
-      <Title level={4} style={{ textAlign: 'left', color: '#667eea' }}>
-        Data Format Requirements:
-      </Title>
-      <List
-        size="small"
-        dataSource={csvFormatData}
-        renderItem={item => (
-          <List.Item style={{ textAlign: 'left', padding: '8px 0' }}>
-            <Space>
-              <Tag color={item.required ? 'red' : 'default'}>
-                {item.required ? 'Required' : 'Optional'}
-              </Tag>
-              <Text strong>{item.field}:</Text>
-              <Text type="secondary">{item.description}</Text>
-            </Space>
-          </List.Item>
-        )}
-      />
-    </Card>
-  )
-
   return (
     <div className="App">
-      <header className="header">
-        <ProjectOutlined style={{ fontSize: '3rem', marginBottom: '1rem' }} />
-        <Title level={1} style={{ color: 'white', margin: 0 }}>
-          Free Gantt Chart
-        </Title>
-        <Paragraph
-          style={{
-            color: 'white',
-            opacity: 0.95,
-            fontSize: '1.1rem',
-            margin: '0.5rem 0 0 0',
-          }}
-        >
-          {connectedSheetId
-            ? 'Connected to Google Sheets'
-            : 'Upload a CSV file or connect Google Sheets to visualize your project'}
-        </Paragraph>
-      </header>
+      <Header connectedSheetId={connectedSheetId} />
 
-      <div className="controls">
-        <Space
-          size="large"
-          wrap
-          style={{ width: '100%', justifyContent: 'space-between' }}
-        >
-          <Space wrap>
-            {connectedSheetId ? (
-              <Tag
-                icon={<GoogleOutlined />}
-                color="green"
-                style={{ fontSize: '14px', padding: '8px 12px' }}
-              >
-                Google Sheets Connected
-              </Tag>
-            ) : (
-              <>
-                <Dragger
-                  {...uploadProps}
-                  style={{ padding: '10px 20px', height: 'auto' }}
-                >
-                  <Space>
-                    <UploadOutlined style={{ fontSize: '20px' }} />
-                    <Text strong>Click or drag CSV file to upload</Text>
-                  </Space>
-                </Dragger>
-                {fileName && (
-                  <Tag
-                    icon={<FileTextOutlined />}
-                    color="blue"
-                    style={{ fontSize: '14px', padding: '8px 12px' }}
-                  >
-                    {fileName}
-                  </Tag>
-                )}
-              </>
-            )}
-          </Space>
-
-          <Space wrap>
-            {isSignedIn ? (
-              <>
-                <Button
-                  icon={<LinkOutlined />}
-                  onClick={handleConnectSheet}
-                  size="large"
-                  type={connectedSheetId ? 'default' : 'primary'}
-                >
-                  {connectedSheetId ? 'Change Sheet' : 'Connect Sheet'}
-                </Button>
-                {connectedSheetId && tasks.length > 0 && (
-                  <Button
-                    icon={<SaveOutlined />}
-                    onClick={handleSaveToSheet}
-                    type="primary"
-                    size="large"
-                    loading={isLoading}
-                    disabled={!hasUnsavedChanges}
-                  >
-                    Save to Sheet
-                    {hasUnsavedChanges && ' *'}
-                  </Button>
-                )}
-                <Button
-                  icon={<LogoutOutlined />}
-                  onClick={handleGoogleSignOut}
-                  size="large"
-                >
-                  Sign Out
-                </Button>
-              </>
-            ) : (
-              <Button
-                icon={<LoginOutlined />}
-                onClick={handleGoogleSignIn}
-                type="primary"
-                size="large"
-                loading={isLoading}
-              >
-                Sign in with Google
-              </Button>
-            )}
-
-            {!connectedSheetId && (
-              <a
-                href={`${import.meta.env.BASE_URL}sample-gantt.csv`}
-                download="sample-gantt.csv"
-              >
-                <Button icon={<DownloadOutlined />} size="large">
-                  Download Sample
-                </Button>
-              </a>
-            )}
-
-            {tasks.length > 0 && (
-              <>
-                <Button
-                  icon={<ExportOutlined />}
-                  onClick={handleExportCSV}
-                  type={connectedSheetId ? 'default' : 'primary'}
-                  size="large"
-                >
-                  Export to CSV
-                </Button>
-                <Button
-                  icon={<DeleteOutlined />}
-                  onClick={handleClearData}
-                  danger
-                  size="large"
-                >
-                  Clear Data
-                </Button>
-              </>
-            )}
-          </Space>
-        </Space>
-      </div>
+      <Controls
+        uploadProps={uploadProps}
+        fileName={fileName}
+        isSignedIn={isSignedIn}
+        connectedSheetId={connectedSheetId}
+        tasksLength={tasks.length}
+        isLoading={isLoading}
+        hasUnsavedChanges={hasUnsavedChanges}
+        onConnectSheet={handleConnectSheet}
+        onSaveToSheet={handleSaveToSheet}
+        onGoogleSignOut={handleGoogleSignOut}
+        onGoogleSignIn={handleGoogleSignIn}
+        onExportCSV={handleExportCSV}
+        onClearData={handleClearData}
+      />
 
       {error && (
         <div style={{ padding: '0 2rem' }}>
@@ -717,151 +394,45 @@ function App() {
       )}
 
       {tasks.length > 0 ? (
-        <Spin spinning={isLoading}>
-          <div className="gantt-container wx-willow-dark-theme">
-            <Toolbar api={api} />
-            <Tooltip api={api}>
-              <Gantt
-                init={setApi}
-                tasks={tasks}
-                links={[]}
-                scales={[
-                  { unit: 'month', step: 1, format: 'MMMM yyyy' },
-                  { unit: 'day', step: 1, format: 'd' },
-                ]}
-                onAddTask={handleAddTask}
-                onUpdateTask={handleUpdateTask}
-                onDeleteTask={handleDeleteTask}
-                readonly={false}
-              />
-            </Tooltip>
-            {api && <Editor api={api} />}
-          </div>
-        </Spin>
+        <GanttChart
+          api={api}
+          tasks={tasks}
+          isLoading={isLoading}
+          onInit={setApi}
+          onAddTask={handleAddTask}
+          onUpdateTask={handleUpdateTask}
+          onDeleteTask={handleDeleteTask}
+        />
       ) : (
-        <div className="empty-state">{emptyStateContent}</div>
+        <EmptyState
+          uploadProps={uploadProps}
+          isSignedIn={isSignedIn}
+          isLoading={isLoading}
+          onGoogleSignIn={handleGoogleSignIn}
+          onConnectSheet={handleConnectSheet}
+        />
       )}
 
-      <Modal
-        title="Connect Google Sheet"
-        open={sheetModalVisible}
-        onOk={handleLoadSheet}
+      <GoogleSheetModal
+        visible={sheetModalVisible}
+        isLoading={isLoading}
+        sheetUrl={sheetUrl}
+        availableSheets={availableSheets}
+        selectedSheet={selectedSheet}
+        onSheetUrlChange={setSheetUrl}
+        onSelectedSheetChange={setSelectedSheet}
+        onFetchSheets={handleFetchSheets}
+        onLoadSheet={handleLoadSheet}
         onCancel={() => {
           setSheetModalVisible(false)
           setAvailableSheets([])
           setSelectedSheet('')
         }}
-        okText={availableSheets.length > 0 ? 'Load Sheet' : 'Next'}
-        okButtonProps={{
-          disabled: availableSheets.length > 0 && !selectedSheet,
+        onBack={() => {
+          setAvailableSheets([])
+          setSelectedSheet('')
         }}
-        confirmLoading={isLoading}
-        width={600}
-        footer={
-          availableSheets.length === 0
-            ? [
-                <Button
-                  key="back"
-                  onClick={() => {
-                    setSheetModalVisible(false)
-                    setAvailableSheets([])
-                    setSelectedSheet('')
-                  }}
-                >
-                  Cancel
-                </Button>,
-                <Button
-                  key="next"
-                  type="primary"
-                  loading={isLoading}
-                  onClick={handleFetchSheets}
-                >
-                  Next
-                </Button>,
-              ]
-            : [
-                <Button
-                  key="back"
-                  onClick={() => {
-                    setAvailableSheets([])
-                    setSelectedSheet('')
-                  }}
-                  disabled={isLoading}
-                >
-                  Back
-                </Button>,
-                <Button
-                  key="load"
-                  type="primary"
-                  loading={isLoading}
-                  disabled={!selectedSheet}
-                  onClick={handleLoadSheet}
-                >
-                  Load Sheet
-                </Button>,
-              ]
-        }
-      >
-        <Space direction="vertical" style={{ width: '100%' }} size="large">
-          {availableSheets.length === 0 ? (
-            <>
-              <div>
-                <Paragraph>
-                  Enter the URL of your Google Sheet containing the Gantt chart
-                  data:
-                </Paragraph>
-                <Input
-                  placeholder="https://docs.google.com/spreadsheets/d/..."
-                  value={sheetUrl}
-                  onChange={e => setSheetUrl(e.target.value)}
-                  size="large"
-                  prefix={<LinkOutlined />}
-                  onPressEnter={handleFetchSheets}
-                />
-              </div>
-              <Alert
-                message="Sheet Format"
-                description="Make sure your Google Sheet has the same columns as the CSV format: id, text, start, end, duration, progress, parent, type"
-                type="info"
-                showIcon
-              />
-            </>
-          ) : (
-            <>
-              <Alert
-                message={`Found ${availableSheets.length} sheet${availableSheets.length > 1 ? 's' : ''}`}
-                description={
-                  availableSheets.length > 1
-                    ? 'Please select which sheet contains your Gantt chart data:'
-                    : 'Ready to load your Gantt chart data'
-                }
-                type="success"
-                showIcon
-              />
-              <div>
-                <Paragraph strong>Select Sheet:</Paragraph>
-                <Select
-                  value={selectedSheet}
-                  onChange={setSelectedSheet}
-                  style={{ width: '100%' }}
-                  size="large"
-                  placeholder="Choose a sheet"
-                  options={availableSheets.map(sheet => ({
-                    label: sheet,
-                    value: sheet,
-                  }))}
-                />
-              </div>
-              <Alert
-                message="Sheet Format"
-                description="The selected sheet should have columns: id, text, start, end, duration, progress, parent, type"
-                type="info"
-                showIcon
-              />
-            </>
-          )}
-        </Space>
-      </Modal>
+      />
     </div>
   )
 }
