@@ -12,7 +12,7 @@ export const csvFormatData = [
   },
   {
     field: 'end',
-    required: true,
+    required: false,
     description: 'End date (YYYY-MM-DD format)',
   },
   { field: 'duration', required: true, description: 'Task duration in days' },

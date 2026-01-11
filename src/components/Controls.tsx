@@ -71,8 +71,12 @@ export const Controls = ({
                 style={{ padding: '10px 20px', height: 'auto' }}
               >
                 <Space>
-                  <UploadOutlined style={{ fontSize: '20px' }} />
-                  <Text strong>Click or drag CSV file to upload</Text>
+                  <UploadOutlined
+                    style={{ fontSize: '20px', color: 'white' }}
+                  />
+                  <Text strong style={{ color: 'white' }}>
+                    Click or drag CSV file to upload
+                  </Text>
                 </Space>
               </Dragger>
               {fileName && (

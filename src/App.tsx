@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect } from 'react'
 import { IApi } from '@svar-ui/react-gantt'
 import { Alert, message } from 'antd'
