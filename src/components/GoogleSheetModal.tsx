@@ -1,7 +1,7 @@
 import { Modal, Space, Typography, Input, Alert, Select, Button } from 'antd'
 import { LinkOutlined } from '@ant-design/icons'
 
-const { Paragraph } = Typography
+const { Paragraph, Text, Link } = Typography
 
 interface GoogleSheetModalProps {
   visible: boolean
@@ -131,6 +131,18 @@ export const GoogleSheetModal = ({
             />
           </>
         )}
+
+        <Text type="secondary">
+          Read our{' '}
+          <Link
+            href={`${import.meta.env.BASE_URL}privacy-policy.html`}
+            target="_blank"
+            rel="noreferrer"
+          >
+            Privacy Policy
+          </Link>
+          .
+        </Text>
       </Space>
     </Modal>
   )

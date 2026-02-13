@@ -44,6 +44,13 @@
   padding: 3rem 2rem;
 }
 
+.footer {
+  padding: 14px 18px;
+  text-align: center;
+  background-color: transparent;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
 /* Ant Design Dragger customization */
 .ant-upload-drag {
   border: 2px dashed #667eea !important;
@@ -101,6 +108,10 @@
   .controls {
     background-color: #2d2d2d;
     border-bottom-color: #404040;
+  }
+
+  .footer {
+    border-top-color: rgba(255, 255, 255, 0.12);
   }
 
   .ant-upload-drag {

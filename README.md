@@ -181,6 +181,11 @@ This will build your project and deploy it to the `gh-pages` branch.
 
 MIT
 
+## 🔒 Privacy Policy
+
+- **Repo copy**: [PRIVACY_POLICY.md](./PRIVACY_POLICY.md)
+- **Deployed page (GitHub Pages-friendly)**: `privacy-policy.html` (it’s included in `public/` and will be published to your Pages site at `<your-pages-url>/privacy-policy.html`)
+
 ## 🤝 Contributing
 
 Contributions are welcome! Feel free to open issues or submit pull requests.

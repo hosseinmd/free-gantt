@@ -11,6 +11,7 @@ import { Controls } from './components/Controls'
 import { EmptyState } from './components/EmptyState'
 import { GanttChart } from './components/GanttChart'
 import { GoogleSheetModal } from './components/GoogleSheetModal'
+import { Footer } from './components/Footer'
 import { CSVRow, GanttTask } from './types/gantt'
 import './App.css'
 import '@svar-ui/react-gantt/all.css'
@@ -434,6 +435,8 @@ function App() {
           setSelectedSheet('')
         }}
       />
+
+      <Footer />
     </div>
   )
 }

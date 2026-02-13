@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Privacy Policy - Free Gantt Chart</title>
+    <style>
+        :root {
+            color-scheme: light dark;
+            --bg: #0b1020;
+            --card: rgba(255, 255, 255, 0.06);
+            --text: rgba(255, 255, 255, 0.92);
+            --muted: rgba(255, 255, 255, 0.72);
+            --border: rgba(255, 255, 255, 0.16);
+            --link: #9bb6ff;
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg: #f6f7fb;
+                --card: #ffffff;
+                --text: rgba(0, 0, 0, 0.88);
+                --muted: rgba(0, 0, 0, 0.62);
+                --border: rgba(0, 0, 0, 0.12);
+                --link: #3056ff;
+            }
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family:
+                ui-sans-serif,
+                system-ui,
+                -apple-system,
+                Segoe UI,
+                Roboto,
+                Helvetica,
+                Arial,
+                "Apple Color Emoji",
+                "Segoe UI Emoji";
+            line-height: 1.55;
+        }
+
+        .wrap {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 48px 18px 72px;
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px 22px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        h1 {
+            font-size: 28px;
+            margin: 0 0 6px;
+        }
+
+        .subtitle {
+            color: var(--muted);
+            margin: 0 0 18px;
+            font-size: 14px;
+        }
+
+        h2 {
+            font-size: 18px;
+            margin: 22px 0 8px;
+        }
+
+        p,
+        li {
+            color: var(--text);
+        }
+
+        a {
+            color: var(--link);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        code {
+            background: rgba(127, 127, 127, 0.18);
+            border: 1px solid rgba(127, 127, 127, 0.22);
+            padding: 2px 6px;
+            border-radius: 8px;
+            font-family:
+                ui-monospace,
+                SFMono-Regular,
+                Menlo,
+                Monaco,
+                Consolas,
+                "Liberation Mono",
+                "Courier New",
+                monospace;
+            font-size: 0.95em;
+        }
+
+        .toplinks {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
+            font-size: 14px;
+            color: var(--muted);
+        }
+
+        .toplinks a {
+            color: var(--muted);
+        }
+
+        .note {
+            margin-top: 16px;
+            padding: 12px 14px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            color: var(--muted);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="toplinks">
+            <a href="./">← Back to app</a>
+            <span>·</span>
+            <a href="./">Free Gantt Chart</a>
+        </div>
+        <div class="card">
+            <h1>Privacy Policy</h1>
+            <p class="subtitle">
+                <strong>Effective date:</strong> 2026-02-13
+            </p>
+
+            <p>
+                Free Gantt Chart ("the App") is an open-source, client-side web app.
+                We do not operate our own backend servers for this App.
+            </p>
+
+            <h2>What data the App accesses</h2>
+            <ul>
+                <li>
+                    <strong>Google Sheets content you choose:</strong> If you connect a
+                    Google Sheet, the App reads the selected spreadsheet data and, if
+                    you click "Save to Sheet", writes updated data back to that same
+                    Google Sheet.
+                </li>
+                <li>
+                    <strong>CSV files you choose:</strong> If you upload a CSV file, the
+                    App processes it locally in your browser to render the Gantt chart.
+                </li>
+            </ul>
+
+            <h2>How the App uses Google user data</h2>
+            <p>
+                The App uses Google OAuth to request an access token with the Google
+                Sheets scope (<code>https://www.googleapis.com/auth/spreadsheets</code>)
+                so it can read and write the sheet you choose, directly from your
+                browser to Google APIs (<code>sheets.googleapis.com</code>).
+            </p>
+            <p>
+                The App’s use and transfer of information received from Google APIs
+                will adhere to the Google API Services User Data Policy, including the
+                Limited Use requirements.
+            </p>
+
+            <h2>What the App does not do</h2>
+            <ul>
+                <li>
+                    <strong>No third-party analytics:</strong> The App does not
+                    intentionally send your sheet contents to analytics or advertising
+                    services.
+                </li>
+                <li>
+                    <strong>No selling of data:</strong> We do not sell your data.
+                </li>
+                <li>
+                    <strong>No custom server storage:</strong> We do not store your
+                    Google Sheet content on our own servers.
+                </li>
+            </ul>
+
+            <h2>Local storage (on your device)</h2>
+            <p>
+                To keep you signed in between refreshes, the App stores the Google
+                OAuth access token and its expiry time in your browser’s local storage
+                (for example under keys like <code>google_sheets_token</code> and
+                <code>google_sheets_token_expiry</code>). This token is used only to
+                call Google APIs from your browser.
+            </p>
+            <p>
+                You can remove this data by signing out in the App and/or clearing
+                your browser’s site data for the App.
+            </p>
+
+            <h2>Sharing</h2>
+            <p>
+                When you use Google Sheets features, your browser communicates with
+                Google’s services to read/write data. Google’s handling of your data
+                is governed by Google’s own policies.
+            </p>
+
+            <h2>Security</h2>
+            <p>
+                We aim to minimize data collection and storage. However, no method of
+                transmission or storage is 100% secure. If you are using a shared
+                computer, we recommend signing out when you are done.
+            </p>
+
+            <h2>Changes to this policy</h2>
+            <p>
+                We may update this policy from time to time. We will post the updated
+                version at this same URL and update the effective date.
+            </p>
+
+            <h2>Contact</h2>
+            <p>
+                For questions, requests, or issues, please contact us via the GitHub
+                repository where this App is published (for example by opening an
+                issue).
+            </p>
+
+            <div class="note">
+                <strong>Note:</strong> This App is open source. You can review the
+                code to verify how it handles data.
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
