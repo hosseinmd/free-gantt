@@ -15,6 +15,14 @@ export const Footer = () => {
         </Link>
         {' · '}
         <Link
+          href={`${import.meta.env.BASE_URL}terms-of-service.html`}
+          target="_blank"
+          rel="noreferrer"
+        >
+          Terms
+        </Link>
+        {' · '}
+        <Link
           href="https://github.com/hosseinmd/free-gantt"
           target="_blank"
           rel="noreferrer"

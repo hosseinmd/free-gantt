@@ -186,6 +186,11 @@ MIT
 - **Repo copy**: [PRIVACY_POLICY.md](./PRIVACY_POLICY.md)
 - **Deployed page (GitHub Pages-friendly)**: `privacy-policy.html` (it’s included in `public/` and will be published to your Pages site at `<your-pages-url>/privacy-policy.html`)
 
+## 📜 Terms of Service
+
+- **Repo copy**: [TERMS_OF_SERVICE.md](./TERMS_OF_SERVICE.md)
+- **Deployed page (GitHub Pages-friendly)**: `terms-of-service.html` (it’s included in `public/` and will be published to your Pages site at `<your-pages-url>/terms-of-service.html`)
+
 ## 🤝 Contributing
 
 Contributions are welcome! Feel free to open issues or submit pull requests.
